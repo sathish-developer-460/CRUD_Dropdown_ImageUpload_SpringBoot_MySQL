@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users List</title>
+</head>
+
+<body>
+    <h2>Users List</h2>
+    <a th:href="@{/users/new}">Create New User</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Department ID</th>
+                <th>Profile Image</th> <!-- New column for image -->
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.department != null} ? ${user.department.name} : '-'"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.department?.id}"></td>
+                <td>
+                    <img th:if="${user.imageUrl != null}" th:src="@{${user.imageUrl}}" alt="Profile" width="50"
+                        height="50">
+                </td>
+                <td>
+                    <a th:href="@{/users/edit/{id}(id=${user.id})}">Edit</a>
+                    <a th:href="@{/users/delete/{id}(id=${user.id})}">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
